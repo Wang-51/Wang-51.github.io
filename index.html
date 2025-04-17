@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王伋 - 个人介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: '微软雅黑', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fbfd 0%, #e6f3ff 100%);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 头部背景动画 */
+        .header-bg {
+            height: 100vh;
+            background: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.1)),
+                        url(image/校园.jpg) fixed center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(248,251,253,0) 0%, #f8fbfd 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        /* 校徽校训放大 */
+        .school-info {
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            animation: slideUp 1s ease;
+            z-index: 3;
+        }
+        .school-logo {
+            width: 240px;
+            border: 2px solid #2c82c9;
+            border-radius: 8px;
+            padding: 5px;
+            background: rgba(255,255,255,0.9);
+        }
+        .school-motto {
+            width: 440px;
+        }
+
+        /* 姓名专业样式优化 */
+        .name-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            padding: 30px 45px;
+            background: #def6ff;
+            border: 3px solid #2c82c9;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(137, 199, 250, 0.2);
+            z-index: 2;
+            animation: scaleUp 1s ease;
+        }
+        .name-title h1 {
+            font-size: 3em;
+            color: #2e97ff;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+        .name-title p {
+            font-size: 1.5em;
+            color: #2e97ff;
+        }
+
+        /* 内容区域动画 */
+        .content-wrap {
+            position: relative;
+            z-index: 2;
+            transform: translateY(100vh);
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .content-wrap.active {
+            transform: translateY(0);
+        }
+
+        .section {
+            background: white;
+            padding: 40px 10%;
+            margin: 50px auto;
+            box-shadow: 0 10px 30px rgba(44, 130, 201, 0.1);
+            border: 1px solid #2c82c9;
+            border-radius: 10px;
+            max-width: 1200px;
+        }
+
+        h2 {
+            color: #2e97ff;
+            border-left: 5px solid #2e97ff;
+            padding-left: 15px;
+            margin: 25px 0;
+            font-size: 2em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 教育背景 */
+        .education-item {
+            background: #f8fbfd;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border: 1px solid #2c82c9;
+        }
+
+        /* 科研项目容器 */
+        .research-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .research-content {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        /* 单个科研项目卡片 */
+        .research-item {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(44, 130, 201, 0.1);
+            border: 1px solid #2c82c9;
+            transition: transform 0.3s;
+        }
+
+        .research-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* 科研项目图片 */
+        .research-img {
+            width: 280px;
+            height: auto;
+            aspect-ratio: 994/1403;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #2c82c9;
+        }
+
+        /* 科研项目文字内容 */
+        .research-text {
+            flex: 1;
+        }
+
+        /* 奖项样式 */
+        .award {
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* 研究详情列表 */
+        .research-details {
+            margin-top: 15px;
+            list-style-type: none;
+        }
+
+        .research-details li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .research-details li i {
+            position: absolute;
+            left: 0;
+            top: 6px;
+            font-size: 0.6em;
+            color: #2c82c9;
+        }
+
+        /* 荣誉证书 */
+        .certificate-category {
+            margin-bottom: 40px;
+        }
+        .certificate-category h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #2e97ff;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 1.4em;
+        }
+        .certificate-category h3 i {
+            margin-right: 12px;
+            color: #2e97ff;
+        }
+
+        /* 证书容器 */
+        .certificates-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* 单个证书框 - 重点修正部分 */
+        .certificate-card {
+            border: 2px solid #2c82c9;
+            border-radius: 10px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(44, 130, 201, 0.15);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(44, 130, 201, 0.2);
+        }
+
+        /* 证书图片容器 - 新增限制大小 */
+        .certificate-image-container {
+            width: 100%;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        /* 证书图片 - 修正大小控制 */
+        .certificate-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* 证书文字信息 */
+        .certificate-info {
+            text-align: center;
+            padding: 0 10px;
+        }
+        .certificate-title {
+            font-weight: 600;
+            margin: 10px 0 5px;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        .certificate-date {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            margin: 0;
+        }
+
+        /* 预留位置样式 */
+        .certificate-placeholder {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-style: italic;
+            min-height: 250px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .certificates-container {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px;
+                margin: 30px 15px;
+            }
+            .header-bg {
+                height: 70vh;
+            }
+            .school-info {
+                left: 20px;
+                gap: 20px;
+            }
+            .school-logo {
+                width: 160px;
+            }
+            .school-motto {
+                width: 220px;
+            }
+            .name-title {
+                padding: 20px;
+                width: 90%;
+            }
+            .name-title h1 {
+                font-size: 2.5em;
+            }
+            .name-title p {
+                font-size: 1.2em;
+            }
+            .research-content {
+                flex-direction: column;
+            }
+            .research-img {
+                width: 100%;
+                max-width: 280px;
+                margin: 0 auto 20px;
+            }
+            .certificates-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .certificates-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes scaleUp {
+            from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .education-item i {
+            color: #4fa9f3;
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="header-bg">
+        <div class="school-info">
+            <img src="image/校标+校名.png" alt="校徽" class="school-logo">
+            <img src="image/校训.png" alt="校训" class="school-motto">
+        </div>
+        <div class="name-title">
+            <h1>王 伋</h1>
+            <p>东北大学 | 计算机科学与技术</p>
+        </div>
+    </div>
+
+    <div class="content-wrap">
+        <!-- 教育背景 -->
+        <div class="section">
+            <h2>教育背景</h2>
+            <div class="education-item">
+                <h3>东北大学 - 计算机科学与技术专业</h3>
+                <p class="date">2022.09 - 至今</p>
+                <p><span><i class="fas fa-star"></i>GPA：4.13/5.0</p>
+                <p><span><i class="fas fa-trophy"></i>专业排名：23/191</p>
+                <p><span><i class="fa-solid fa-pen-to-square"></i>英语水平：CET-6（<strong>558分</strong>） | CET-4（540分）</p>
+            </div>
+        </div>
+
+        <!-- 科研经历 -->
+        <div class="section">
+            <h2>科研经历</h2>
+            <div class="research-container">
+                <!-- 项目1 - 独立卡片 -->
+                <div class="research-item">
+                    <div class="research-content">
+                        <img src="image/全球校园人工智能算法精英大赛国一.png" alt="科研项目" class="research-img">
+                        <div class="research-text">
+                            <h3>2024 年第六届全球校园人工智能算法精英大赛 - AI 生成人脸图像鉴别赛道</h3>
+                            <p class="award"><i class="fas fa-trophy"></i> 国家级一等奖</p>
+                            <p class="date">2022.09 - 2022.11</p>
+                            <ul class="research-details">
+                                <li><i class="fas fa-circle"></i> 针对 AI 生成图像和 DeepFake 等技术带来的图像难辨问题，选用 <strong> YOLOv8 </strong>大模型作为图像鉴别任务基础模型，通过学习人工智能领域相关原理、理论，对原模型<strong> Backbone 结构</strong>中的卷积神经网络进行优化，用相同训练数据集测试不同卷积层组合效果，调整原始 Backbone，增加<strong> C2PSA 层</strong>、替换<strong> C2f 层</strong>，使模型在分类任务上鲁棒性和稳定性增强，测试集判断准确率提升约<strong> 8%</strong>。</li>
+                                <li><i class="fas fa-circle"></i> 作为<strong>数据负责人</strong>构建跨模态人脸数据集，使用<strong> GAN 模型</strong>和常见的<strong> Diffusion 模型</strong>生成供训练使用的 AI 人脸图片，对数据集进行精细预处理，根据训练效果协调团队完成模型迭代与部署，并动态完善数据集。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目2 - 独立卡片 -->
+                <div class="research-item">
+                    <div class="research-content">
+                        <div class="research-text">
+                            <h3>操作系统的模拟实现</h3>
+                            <p class="date">2025.01</p>
+                            <ul class="research-details">
+                                <li><i class="fas fa-circle"></i> 使用<strong> Java 语言</strong>，用<strong>模块化</strong>和<strong>面向对象</strong>方式模拟实现操作系统核心功能与算法，构建了模拟磁盘及文件系统，实现了文件接口操作，管理内存缓冲页，处理进程线程同步互斥，最后对相关信息进行可视化，并实现了延时展示。</li>
+                                <li><i class="fas fa-circle"></i> 作为<strong>项目负责人</strong>带领团队完成<strong>磁盘与文件组织</strong>、<strong>文件接口</strong>、<strong>内存缓冲页</strong>和<strong>进程调度</strong>模块开发，主导文件接口与内存缓冲页的设计，协调跨模块接口规范制定，整合形成完整系统，提升团队协作效率并确保项目高质量交付。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目3 - 独立卡片 -->
+                <div class="research-item">
+                    <div class="research-content">
+                        <div class="research-text">
+                            <h3>状态机模块和MIPS五级流水线CPU的设计与实现</h3>
+                            <p class="date">2025.01</p>
+                            <ul class="research-details">
+                                <li><i class="fas fa-circle"></i> 用<strong> Verilog 语言</strong>实现了五级流水线CPU，实现 41 条指令，兼容<strong> MIPS32 release1 </strong>架构，采用<strong>五级静态流水</strong>，使用<strong> MIPS 延迟槽技术</strong>解决因转移语句带来的结构相关问题，实现自适应流水线停顿，达到芯片生产要求。</li>
+                                <li><i class="fas fa-circle"></i> 用<strong> Verilog 语言</strong>实现了<strong>状态机模块</strong>，分别使用一段式、两段式和三段式三种状态机的写法，通过仿真波形图探究不同的写法对状态机输出结果的影响。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 荣誉证书 - 修正后的部分 -->
+        <div class="section">
+            <h2>荣誉证书</h2>
+            
+            <!-- 英语四六级证书 -->
+            <div class="certificate-category">
+                <h3><i class="fas fa-language"></i> 英语四六级证书</h3>
+                <div class="certificates-container">
+                    <!-- 证书1 -->
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/CET6.jpg" alt="英语六级证书" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">大学英语六级证书（558分）</p>
+                            <p class="certificate-date">2023年12月</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 证书2 -->
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/CET4.jpg" alt="英语四级证书" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">大学英语四级证书（540分）</p>
+                            <p class="certificate-date">2023年3月</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 人工智能类竞赛证书 -->
+            <div class="certificate-category">
+                <h3><i class="fas fa-robot"></i> 人工智能类竞赛证书</h3>
+                <div class="certificates-container">
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/全球校园人工智能算法精英大赛国一.png" alt="AI竞赛一等奖" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">2024 年第六届全球校园人工智能算法精英大赛 - AI 生成人脸图像鉴别赛道</p>
+                            <p class="award"><i class="fas fa-trophy"></i> 国家级一等奖</p>
+                            <p class="certificate-date">2024年11月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/AI人脸鉴别省一.png" alt="AI竞赛一等奖" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">2024 年第六届全球校园人工智能算法精英大赛AI 生成人脸图像鉴别赛道</p>
+                            <p class="award"><i class="fas fa-trophy"></i> 省级一等奖</p>
+                            <p class="certificate-date">2024年11月</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 算法竞赛证书 -->
+            <div class="certificate-category">
+                <h3><i class="fas fa-code"></i> 算法竞赛证书</h3>
+                <div class="certificates-container">
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/蓝桥杯.jpg" alt="蓝桥杯省三" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">“蓝桥杯”全国软件和信息技术专业人才大赛-C/C++程序设计大学A组</p>
+                            <p class="award"><i class="fas fa-trophy"></i> 省级三等奖</p>
+                            <p class="certificate-date">2024年4月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/睿抗省赛.jpg" alt="睿抗省三" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">2024睿抗机器人开发者大赛（RAICOM）CAIP编程技能赛</p>
+                            <p class="award"><i class="fas fa-trophy"></i> 省级三等奖</p>
+                            <p class="certificate-date">2024年7月</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 学习相关证书 -->
+            <div class="certificate-category">
+                <h3><i class="fas fa-graduation-cap"></i> 学习相关证书</h3>
+                <div class="certificates-container">
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/二等奖学金.jpg" alt="校综合二等奖学金" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">校综合二等奖学金（前3%）</p>
+                            <p class="certificate-date">2024年11月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/三好学生.jpg" alt="校级三好学生" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">校级“三好学生”</p>
+                            <p class="certificate-date">2024年11月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/三等奖学金3.jpg" alt="校综合三等奖学金" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">校综合三等奖学金（前21.5%）</p>
+                            <p class="certificate-date">2024年4月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/三等奖学金2.jpg" alt="校综合三等奖学金" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">校综合三等奖学金（前21.5%）</p>
+                            <p class="certificate-date">2023年10月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/三等奖学金1.jpg" alt="校综合三等奖学金" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">校综合三等奖学金（前21.5%）</p>
+                            <p class="certificate-date">2023年5月</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 其他证书 -->
+            <div class="certificate-category">
+                <h3><i class="fas fa-certificate"></i> 其他证书</h3>
+                <div class="certificates-container">
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/软考.jpg" alt="计算机技术与软件专业技术资格" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">计算机技术与软件专业技术资格-初级程序员</p>
+                            <p class="certificate-date">2024年5月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/优秀入党积极分子.jpg" alt="优秀入党积极分子" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">优秀入党积极分子</p>
+                            <p class="certificate-date">2023年12月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/普通话等级证书.jpg" alt="普通话等级证书" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">普通话等级证书 - 二级乙等</p>
+                            <p class="certificate-date">2023年12月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/征文比赛三等奖.jpg" alt="征文比赛三等奖" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">“勿忘国耻，圆梦中华”主题征文比赛 - 三等奖</p>
+                            <p class="certificate-date">2024年12月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/集体跳绳第三名.jpg" alt="集体跳绳第三名" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">校第三十八届运动会-学生混合组集体跳绳第三名</p>
+                            <p class="certificate-date">2024年4月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/拔河第六名.jpg" alt="拔河第六名" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">校第三十七届校运会-学生混合组拔河第六名</p>
+                            <p class="certificate-date">2023年4月</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image-container">
+                            <img src="image/羽毛球新生杯第二名.jpg" alt="羽毛球新生杯第二名" class="certificate-image">
+                        </div>
+                        <div class="certificate-info">
+                            <p class="certificate-title">羽毛球新生杯 - 第二名</p>
+                            <p class="certificate-date">2022年10月</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 滚动动画控制
+        window.addEventListener('scroll', () => {
+            const content = document.querySelector('.content-wrap');
+            const headerBg = document.querySelector('.header-bg');
+            
+            if (window.scrollY > 50) {
+                content.classList.add('active');
+                headerBg.style.opacity = 1 - window.scrollY / 300;
+            } else {
+                content.classList.remove('active');
+                headerBg.style.opacity = 1;
+            }
+        });
+    </script>
+</body>
+</html>
